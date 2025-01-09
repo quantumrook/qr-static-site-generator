@@ -21,42 +21,18 @@ markdown_body = handle_callouts(markdown_body)
 # Handle headers
 markdown_body = handle_headers(markdown_body)
 
-# squished_body = ""
-# have_reached_text = False
+# Replace template with content
 
-# for line in markdown_body:
-#     if line is "\n" and have_reached_text == False:
-#         continue
-#     else:
-#         have_reached_text = True
-#     if line is "\n":
-#         squished_body += "<br />"
-#     squished_body += line
+## Replace Post Template with content
+squished_post = merge_with_post(markdown_body, frontmatter)
+
+## Replace Base template with post
 
 base_fp = f"{base_path}{templates["base"]}"
 base_html_template = [ ]
 
 with open(base_fp, "r") as file:
     base_html_template = file.readlines()
-
-# post_fp = f"{base_path}{templates["post"]}"
-# post_html_template = [ ]
-
-# with open(post_fp, "r") as file:
-#     post_html_template = file.readlines()
-
-# squished_post = ""
-# for line in post_html_template:
-#     if "{{frontmatter}}" in line:
-#         last_modified = dates_modified[-1].strip("\n")
-#         last_modified = last_modified.strip('"')
-#         line = line.replace("{{frontmatter}}", f"Created: {date_created} <br/>Last Modified: {last_modified}")
-#     if "{{post_body}}" in line:
-#         line = line.replace("{{post_body}}", squished_body)
-
-#     squished_post += line
-
-squished_post = merge_with_post(markdown_body, frontmatter)
 
 for i, line in enumerate(base_html_template):
     if "{{title}}" in line:
