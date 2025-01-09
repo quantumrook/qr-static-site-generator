@@ -5,6 +5,7 @@ from handlers.callout import handle_callouts
 from handlers.headers import handle_headers
 from handlers.merge_with_post import merge_with_post
 from handlers.styling import handle_styling
+from handlers.lists import handle_lists
 
 markdown_to_convert_fp = f"{base_path}\\templates\\example.md"
 markdown_to_convert_lines = [ ]
@@ -24,6 +25,9 @@ markdown_body = handle_headers(markdown_body)
 
 # Handle styling (like bold, italics, etc)
 markdown_body = handle_styling(markdown_body)
+
+# Handle lists
+markdown_body = handle_lists(markdown_body)
 
 # Replace template with content
 

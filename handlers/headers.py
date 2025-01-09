@@ -5,8 +5,8 @@ def handle_headers(markdown_body) -> list[str]:
             header_level += "#"
         header_level += " "
         
-        header_indicies = [i for i, line in enumerate(markdown_body) if header_level in line]
-        for i in header_indicies:
+        header_indices = [i for i, line in enumerate(markdown_body) if header_level in line]
+        for i in header_indices:
             header_line = markdown_body[i].strip()
             markdown_body[i] = header_line.replace(header_level, f"<h{j}>") + f"</h{j}>\n"
     return markdown_body
