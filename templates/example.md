@@ -8,9 +8,11 @@ modified:
 
 ## This is H2
 
-Here's some text.
+Here's **some text**.
 
-I should probably get some lorem-ipsum in here.
+I should **probably** get *some* ***lorem-ipsum*** in here.
+
+~~TODO: add lorem-ipsum~~
 
 ### Lorem Ipsum
 
