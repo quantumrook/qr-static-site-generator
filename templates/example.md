@@ -1,7 +1,7 @@
 ---
 title: "Example"
 created: "2025-01-07"
-modified:
+modified: 
     - "2025-01-07"
     - "2025-01-08"
 ---
