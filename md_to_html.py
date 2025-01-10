@@ -20,14 +20,14 @@ frontmatter = (title, date_created, dates_modified[-1])
 # Handle callouts
 markdown_body = handle_callouts(markdown_body)
     
-# Handle headers
-markdown_body = handle_headers(markdown_body)
-
 # Handle styling (like bold, italics, etc)
 markdown_body = handle_styling(markdown_body)
 
 # Handle lists
 markdown_body = handle_lists(markdown_body)
+
+# Handle headers
+markdown_body = handle_headers(markdown_body)
 
 # Replace template with content
 

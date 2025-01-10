@@ -42,6 +42,8 @@ def handle_styling(markdown_body) -> list[str]:
         for syntax_value in syntax_values:
             markdown_body = __handle_syntax(markdown_body, syntax_value, html_start, html_end)
 
+    markdown_body = __handle_horizontal_rule(markdown_body)
+
     return markdown_body
 
 def __handle_syntax(markdown_body, syntax_md, html_start, html_end) -> list[str]:
@@ -66,4 +68,13 @@ def __handle_syntax(markdown_body, syntax_md, html_start, html_end) -> list[str]
                         start_of_block = True
             markdown_body[line_index] = " ".join(words)
 
+    return markdown_body
+
+def __handle_horizontal_rule(markdown_body: list[str]) -> list[str]:
+    syntax_md = "---"
+    
+    for line_index, line in enumerate(markdown_body):
+        if syntax_md == line.strip():
+            markdown_body[line_index] = "<hr />\n"
+            
     return markdown_body
