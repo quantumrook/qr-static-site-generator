@@ -12,7 +12,7 @@ markdown_to_convert_lines = [ ]
 
 with open(markdown_to_convert_fp, "r") as file:
     markdown_to_convert_lines = file.readlines()
-    
+
 # Get frontmatter
 title, date_created, dates_modified, markdown_body = handle_frontmatter(markdown_to_convert_lines)
 frontmatter = (title, date_created, dates_modified[-1])

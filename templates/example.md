@@ -28,12 +28,13 @@ Curabitur vitae lacus commodo, suscipit dolor tincidunt, tempor orci. Morbi quis
 
 ### Lists
 
-Let's see what we're working on for v0.03:
+Let's see what we're working on for v0.02:
 
 - task lists
 - unordered lists
   - sub lists
 - ordered lists
+- use python 3.
 
 But in order:
 
