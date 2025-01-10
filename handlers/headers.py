@@ -9,27 +9,27 @@ markdown_syntax = {
 
 html_syntax = {
     "h6": [
-      "<section class=h6><h6 id=",
+      '<section class=h6><h6 id="',
       "</h6>"  
     ],
     "h5": [
-        "<section class=h5><h5 id=",
+        '<section class=h5><h5 id="',
         "</h5>"
     ],
     "h4": [
-        "<section class=h4><h4 id=",
+        '<section class=h4><h4 id="',
         "</h4>"
     ],
     "h3": [
-        "<section class=h3><h3 id=",
+        '<section class=h3><h3 id="',
         "</h3>"
     ],
     "h2": [
-        "<section class=h2><h2 id=",
+        '<section class=h2><h2 id="',
         "</h2>"
     ],
     "h1": [
-        "<section class=h1><h1 id=",
+        '<section class=h1><h1 id="',
         "</h1>"
     ]
 }

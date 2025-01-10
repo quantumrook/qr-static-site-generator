@@ -83,7 +83,7 @@ def __handle_syntax(markdown_body: list[str], syntax_md: str, html_start: str, h
     
     previous_indent = -1
     for i in list_element_indices:
-        indent_level = markdown_body[i].split(syntax_md.strip())[0].count(" ")
+        indent_level = markdown_body[i].split(syntax_md.strip())[0].count("\t")
         list_content = markdown_body[i].strip("\n")
 
         if ordered_list:

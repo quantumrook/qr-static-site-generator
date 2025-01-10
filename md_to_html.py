@@ -8,6 +8,8 @@ from handlers.styling import handle_styling
 from handlers.lists import handle_lists
 from handlers.links import handle_links
 
+from handlers.regex import convert_formatting
+
 markdown_to_convert_fp = f"{base_path}\\templates\\example.md"
 markdown_to_convert_lines = [ ]
 
@@ -18,6 +20,7 @@ with open(markdown_to_convert_fp, "r") as file:
 title, date_created, dates_modified, markdown_body = handle_frontmatter(markdown_to_convert_lines)
 frontmatter = (title, date_created, dates_modified[-1])
 
+
 # Handle callouts
 markdown_body = handle_callouts(markdown_body)
 
@@ -25,7 +28,8 @@ markdown_body = handle_callouts(markdown_body)
 markdown_body = handle_links(markdown_body)
 
 # Handle styling (like bold, italics, etc)
-markdown_body = handle_styling(markdown_body)
+# markdown_body = handle_styling(markdown_body)
+markdown_body = convert_formatting(markdown_body)
 
 # Handle lists
 markdown_body = handle_lists(markdown_body)

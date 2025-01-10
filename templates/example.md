@@ -16,7 +16,9 @@ I should **probably** get *some* ***lorem-ipsum*** in here.
 
 ~~TODO: add lorem-ipsum~~
 
-Here's an [internal link](#this-is-h2).
+Here's an [internal link](#this-is-h2) to the same file. And here's an [internal site](/Example2.md) link. Here's a [link](/Example2.md#other-h2) to a header in the other file.
+
+Now for the tricky part (?) let's link to the formatting [sheet](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax). And now an external image: ![Engelbart](https://history-computer.com/ModernComputer/Basis/images/Engelbart.jpg)
 
 ### Lorem Ipsum
 
@@ -38,20 +40,20 @@ Let's see what we're working on for v0.02:
 
 - task lists
 - unordered lists
-  - sub lists
+	- sub lists
 - ordered lists
 - use python 3.
 
-But in order:
+###### But in order:
 
 1. unordered lists
-   1. sub lists
+	1. sub lists
 2. ordered lists
 3. task lists
 
 And now let's track our progress:
 
 - [x] unordered lists
-  - [x] sub lists
+	- [x] sub lists
 - [x] ordered lists
 - [ ] task lists
