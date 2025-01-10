@@ -1,9 +1,10 @@
 import re
 
 regex_syntax = {
-    "unordered" : "^-\\ ",
+    "unordered" : "^-\\ [^\\[]",
     "ordered" : "^\\d+\\.",
-    "task" : "^-\\[\\ \\] "
+    "task" : "^- \\[\s\\] ",
+    "task_complete" : "^- \\[[x]\\] "
 }
 
 markdown_syntax = {
@@ -14,8 +15,10 @@ markdown_syntax = {
         "1. "
     ],
     "task" : [
-        "[ ] ",
-        "[x] "
+        "- [ ] "
+    ],
+    "task_complete" : [ 
+        "- [x] "
     ]
 }
 
@@ -29,8 +32,12 @@ html_syntax = {
         "</ol>"
     ],
     "task" : [
-        "<ul>",
-        "</ul>"
+        '<ul>\n',
+        '</ul>'
+    ],
+    "task_complete" : [
+        '<ul>\n',
+        '</ul>'
     ]
 }
 
@@ -60,6 +67,20 @@ def __handle_syntax(markdown_body: list[str], syntax_md: str, html_start: str, h
         syntax_md = syntax_md[1:]
         ordered_list = True
     
+    li_prefix = "<li>"
+    li_suffix = "</li>"
+    
+    task_list = False
+    if "[ ]" in syntax_md:
+        task_list = True
+        li_prefix = '<input type="checkbox" id="listitem" disabled/><label for="listitem">'
+        li_suffix = "</label></br>"
+        
+    if "[x]" in syntax_md:
+        task_list = True
+        li_prefix = '<input type="checkbox" id="listitem" checked disabled/><label for="listitem">'
+        li_suffix = "</label></br>"
+    
     previous_indent = -1
     for i in list_element_indices:
         indent_level = markdown_body[i].split(syntax_md.strip())[0].count(" ")
@@ -70,14 +91,15 @@ def __handle_syntax(markdown_body: list[str], syntax_md: str, html_start: str, h
             list_content = list_content[0:number_index-1] + list_content[number_index:]
         
         if indent_level > previous_indent:
-            markdown_body[i] = list_content.replace(syntax_md, f"{html_start}<li>") + "</li>\n"
+            markdown_body[i] = list_content.replace(syntax_md, f"{html_start}{li_prefix}") + f"{li_suffix}\n"
         elif indent_level < previous_indent:
             previous_index = list_element_indices[list_element_indices.index(i)-1]
             previous_content = markdown_body[previous_index].strip("\n")
             markdown_body[previous_index] = previous_content + f"{html_end}\n"
-            markdown_body[i] = list_content.replace(syntax_md, "<li>") + "</li>\n"
+            markdown_body[i] = list_content.replace(syntax_md, li_prefix) + f"{li_suffix}\n"
         else:
-            markdown_body[i] = list_content.replace(syntax_md, f"<li>") + "</li>\n"
+            markdown_body[i] = list_content.replace(syntax_md, li_prefix) + f"{li_suffix}\n"
+            
         if (i+1) not in list_element_indices:
             markdown_body[i] += f"{html_end}\n"
         previous_indent = indent_level

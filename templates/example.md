@@ -42,3 +42,10 @@ But in order:
    1. sub lists
 2. ordered lists
 3. task lists
+
+And now let's track our progress:
+
+- [x] unordered lists
+  - [x] sub lists
+- [x] ordered lists
+- [ ] task lists
