@@ -6,6 +6,7 @@ from handlers.headers import handle_headers
 from handlers.merge_with_post import merge_with_post
 from handlers.styling import handle_styling
 from handlers.lists import handle_lists
+from handlers.links import handle_links
 
 markdown_to_convert_fp = f"{base_path}\\templates\\example.md"
 markdown_to_convert_lines = [ ]
@@ -19,7 +20,10 @@ frontmatter = (title, date_created, dates_modified[-1])
 
 # Handle callouts
 markdown_body = handle_callouts(markdown_body)
-    
+
+# Handle internal, external links
+markdown_body = handle_links(markdown_body)
+
 # Handle styling (like bold, italics, etc)
 markdown_body = handle_styling(markdown_body)
 

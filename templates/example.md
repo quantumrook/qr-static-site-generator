@@ -6,6 +6,8 @@ modified:
     - "2025-01-08"
 ---
 
+![small banner](/content/small_banner.png)
+
 ## This is H2
 
 Here's **some text**.
@@ -13,6 +15,8 @@ Here's **some text**.
 I should **probably** get *some* ***lorem-ipsum*** in here.
 
 ~~TODO: add lorem-ipsum~~
+
+Here's an [internal link](#this-is-h2).
 
 ### Lorem Ipsum
 

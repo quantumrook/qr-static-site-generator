@@ -75,6 +75,6 @@ def __handle_horizontal_rule(markdown_body: list[str]) -> list[str]:
     
     for line_index, line in enumerate(markdown_body):
         if syntax_md == line.strip():
-            markdown_body[line_index] = "<hr />\n"
+            markdown_body[line_index] = "<hr />"
             
     return markdown_body

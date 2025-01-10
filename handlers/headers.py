@@ -56,6 +56,6 @@ def __handle_syntax(markdown_body: list[str], syntax_md: str, html_start: str, h
             markdown_body[line_index] = f'{html_start}{header_alias}">{header_content}{html_end}'
             started_section = True
         if (line_index+1) == len(markdown_body) and started_section:
-            markdown_body[line_index] += "\n</section>\n"
+            markdown_body[line_index] += "</section>\n"
     
     return markdown_body
