@@ -7,8 +7,8 @@ markdown_syntax = {
 
 html_syntax = {
     "multi_line" : [
-        r'<pre><code class="\g<language>">',
-        r'</code></pre>'
+        r'<pre>',
+        r'</pre>'
     ],
 }
 
@@ -49,9 +49,9 @@ def __handle_syntax(markdown_body: list[str], syntax_md: str, html_start: str, h
                     language = "text"
             else:
                 if block_started:
-                    line_with_keywords = line
+                    line_with_keywords = line 
                     for keyword, kw_regex in reserved_words[language].items():
                         line_with_keywords = re.sub(keyword, kw_regex, line_with_keywords)
-                    markdown_body[i] = line_with_keywords
+                    markdown_body[i] =f'<code class="{language}">' + line_with_keywords.strip("\n") + "</code>\n"
     
     return markdown_body

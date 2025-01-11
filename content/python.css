@@ -1,19 +1,21 @@
-code.python {
+pre {
     display: block;
     counter-reset: linenumber;
-    color: blue;
+    margin-right: 1.8rem;
+    margin-left: 1.8rem;
 }
 
-code.python > span.line::before{
+code.python {
+    color: blue;
+    
+}
+
+code.python::before{
     position: absolute;
     left: 0.5rem;
     font-family: monospace;
     counter-increment: linenumber;
     content: counter(linenumber);
-}
-
-code.python > span.line {
-    margin: 0 1.8rem 0;
 }
 
 code.python > span.comment{
