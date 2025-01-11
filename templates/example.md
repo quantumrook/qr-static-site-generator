@@ -22,6 +22,7 @@ Now for the tricky part (?) let's link to the formatting [sheet](https://help.ob
 
 ### Lorem Ipsum
 
+> [!note] 
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ullamcorper eros at maximus porta. Vestibulum lectus metus, ornare nec suscipit at, sagittis vitae augue. Vestibulum sem velit, lobortis eu mattis nec, pulvinar ac metus. Nulla ex quam, gravida in efficitur vel, accumsan vitae lorem. In at malesuada mauris. Etiam id dui sit amet nisl efficitur fermentum. Nam mattis sapien eget dolor imperdiet suscipit. Phasellus tristique eleifend dolor nec ultrices. Fusce semper ex mollis risus vehicula fringilla. Vivamus commodo ut tortor vitae ultricies. Mauris consequat fermentum egestas. Nunc pulvinar mauris ipsum, a ornare massa consectetur eget.
 
 Donec venenatis rhoncus porttitor. Aliquam sed luctus mi. Fusce vel massa vel magna luctus sollicitudin ut vitae magna. Donec pulvinar consequat nisi, convallis elementum metus condimentum id. Mauris gravida eros non odio varius ornare. Mauris vel orci tincidunt, lobortis augue nec, ultrices lacus. Etiam feugiat sagittis rutrum. Fusce in sapien aliquam, pellentesque risus eu, iaculis est. Nam convallis, mi eget maximus sagittis, justo nisi elementum ex, ut luctus risus mi eu ipsum. Aliquam sit amet egestas diam. Donec non massa ac turpis tempus suscipit.
