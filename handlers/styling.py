@@ -30,8 +30,8 @@ html_syntax = {
         "</i>"
     ],
     "strikethrough" : [
-        "<strike>",
-        "</strike>"
+        "<s>",
+        "</s>"
     ]
 }
 
