@@ -60,6 +60,8 @@ def __handle_syntax(markdown_body: list[str], syntax_md: str, html_start: str, h
         
         formatted_line += row_prefix
         for match in row_match:
+            if not match:
+                continue
             if "-" in match:
                 alignment_line = True
                 headers_complete = True
