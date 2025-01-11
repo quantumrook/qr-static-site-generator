@@ -12,27 +12,27 @@ markdown_syntax = {
 
 html_syntax = {
     "image_internal" : [
-        r'<img src="..\g<link>" alt="\g<alttext>" />',
+        r' <img src="..\g<link>" alt="\g<alttext>" />',
         ""
     ],
     "image_external" : [
-        r'<img src="\g<link>" alt="\g<alttext>" />',
+        r' <img src="\g<link>" alt="\g<alttext>" />',
         ""
     ],
     "same_file" : [
-        r'<a href="\g<headerlink>">\g<displaytext></a>',
+        r' <a href="\g<headerlink>">\g<displaytext></a>',
         ""
     ],
     "internal_site" : [
-        r'<a href="..\g<internallink>.html">\g<displaytext></a>',
+        r' <a href="..\g<internallink>.html">\g<displaytext></a>',
         ""
     ],
     "internal_site_and_header" : [
-        r'<a href="..\g<internallink>.html\g<headerlink>">\g<displaytext></a>',
+        r' <a href="..\g<internallink>.html\g<headerlink>">\g<displaytext></a>',
         ""
     ],
     "external_site" : [
-        r'<a href="\g<externallink>">\g<displaytext></a>',
+        r' <a href="\g<externallink>">\g<displaytext></a>',
         ""
     ]
 }
