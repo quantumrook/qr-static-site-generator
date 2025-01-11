@@ -6,6 +6,23 @@ modified:
     - "2025-01-08"
 ---
 
+## Table of Features Implemented
+
+| Feature | Implemented |
+| ------- | ----------- |
+| Unordered Lists | Yes |
+| Ordered Lists | Yes |
+| Task Lists | Yes |
+| images, internal | Yes |
+| images, external | Yes |
+| links, internal | Yes |
+| links, external | Yes |
+| links, embedded | No |
+| Tables | In progress |
+| Callouts | Yes |
+| Code Blocks | Yes |
+| Math | No |
+
 ![small banner](/content/small_banner.png)
 
 ## This is H2

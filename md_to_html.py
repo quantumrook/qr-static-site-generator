@@ -8,6 +8,7 @@ from handlers.styling import handle_styling
 from handlers.lists import handle_lists
 from handlers.links import handle_links
 from handlers.preformatted import handle_preformatted_blocks
+from handlers.tables import handle_tables
 
 from handlers.regex import convert_formatting
 
@@ -21,6 +22,8 @@ with open(markdown_to_convert_fp, "r") as file:
 title, date_created, dates_modified, markdown_body = handle_frontmatter(markdown_to_convert_lines)
 frontmatter = (title, date_created, dates_modified[-1])
 
+# Handle Tables
+markdown_body = handle_tables(markdown_body)
 
 # Handle callouts
 markdown_body = handle_callouts(markdown_body)
