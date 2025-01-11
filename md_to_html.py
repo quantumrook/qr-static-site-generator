@@ -7,6 +7,7 @@ from handlers.merge_with_post import merge_with_post
 from handlers.styling import handle_styling
 from handlers.lists import handle_lists
 from handlers.links import handle_links
+from handlers.preformatted import handle_preformatted_blocks
 
 from handlers.regex import convert_formatting
 
@@ -26,6 +27,8 @@ markdown_body = handle_callouts(markdown_body)
 
 # Handle internal, external links
 markdown_body = handle_links(markdown_body)
+
+markdown_body = handle_preformatted_blocks(markdown_body)
 
 # Handle styling (like bold, italics, etc)
 # markdown_body = handle_styling(markdown_body)

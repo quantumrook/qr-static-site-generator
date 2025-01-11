@@ -44,7 +44,7 @@ Let's see what we're working on for v0.02:
 - ordered lists
 - use python 3.
 
-###### But in order:
+#### But in order:
 
 1. unordered lists
 	1. sub lists
@@ -57,3 +57,22 @@ And now let's track our progress:
 	- [x] sub lists
 - [x] ordered lists
 - [ ] task lists
+
+## Now onto some code
+
+Here, we create a simple loop in python:
+
+```python
+#start, stop, step
+for i in range(start, stop, step):
+    #do something
+```
+
+Now let's step through this:
+
+```
+define start
+define stop
+define our step size
+do numerical integration
+```
