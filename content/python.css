@@ -1,0 +1,29 @@
+code.python {
+    display: block;
+    counter-reset: linenumber;
+    color: blue;
+}
+
+code.python > span.line::before{
+    position: absolute;
+    left: 0.5rem;
+    font-family: monospace;
+    counter-increment: linenumber;
+    content: counter(linenumber);
+}
+
+code.python > span.line {
+    margin: 0 1.8rem 0;
+}
+
+code.python > span.comment{
+    color: green;
+}
+
+code.python > span.keyword{
+    color: purple;
+}
+
+code.python > span.method{
+    color: darkgoldenrod;
+}

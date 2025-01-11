@@ -63,9 +63,9 @@ And now let's track our progress:
 Here, we create a simple loop in python:
 
 ```python
-#start, stop, step
+#before: start, stop, step
 for i in range(start, stop, step):
-    #do something
+    f.integrate(i)
 ```
 
 Now let's step through this:

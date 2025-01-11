@@ -28,8 +28,6 @@ markdown_body = handle_callouts(markdown_body)
 # Handle internal, external links
 markdown_body = handle_links(markdown_body)
 
-markdown_body = handle_preformatted_blocks(markdown_body)
-
 # Handle styling (like bold, italics, etc)
 # markdown_body = handle_styling(markdown_body)
 markdown_body = convert_formatting(markdown_body)
@@ -39,6 +37,8 @@ markdown_body = handle_lists(markdown_body)
 
 # Handle headers
 markdown_body = handle_headers(markdown_body)
+
+markdown_body = handle_preformatted_blocks(markdown_body)
 
 # Replace template with content
 
