@@ -4,7 +4,6 @@ from handlers.frontmatter import handle_frontmatter
 from handlers.callout import handle_callouts
 from handlers.headers import handle_headers
 from handlers.merge_with_post import merge_with_post
-from handlers.styling import handle_styling
 from handlers.lists import handle_lists
 from handlers.links import handle_links
 from handlers.preformatted import handle_preformatted_blocks
@@ -12,57 +11,71 @@ from handlers.tables import handle_tables
 
 from handlers.regex import convert_formatting
 
-markdown_to_convert_fp = f"{base_path}\\templates\\example.md"
-markdown_to_convert_lines = [ ]
+import os
 
-with open(markdown_to_convert_fp, "r") as file:
-    markdown_to_convert_lines = file.readlines()
 
-# Get frontmatter
-title, date_created, dates_modified, markdown_body = handle_frontmatter(markdown_to_convert_lines)
-frontmatter = (title, date_created, dates_modified[-1])
+def core_loop(markdown_to_convert):
+    markdown_to_convert_lines = [ ]
 
-# Handle Tables
-markdown_body = handle_tables(markdown_body)
+    with open(markdown_to_convert, "r") as file:
+        markdown_to_convert_lines = file.readlines()
 
-# Handle callouts
-markdown_body = handle_callouts(markdown_body)
+    # Get frontmatter
+    title, date_created, dates_modified, markdown_body = handle_frontmatter(markdown_to_convert_lines)
+    frontmatter = (title, date_created, dates_modified[-1])
 
-# Handle internal, external links
-markdown_body = handle_links(markdown_body)
+    # Handle Tables
+    markdown_body = handle_tables(markdown_body)
 
-# Handle styling (like bold, italics, etc)
-# markdown_body = handle_styling(markdown_body)
-markdown_body = convert_formatting(markdown_body)
+    # Handle callouts
+    markdown_body = handle_callouts(markdown_body)
 
-# Handle lists
-markdown_body = handle_lists(markdown_body)
+    # Handle internal, external links
+    markdown_body = handle_links(markdown_body)
 
-# Handle headers
-markdown_body = handle_headers(markdown_body)
+    # Handle styling (like bold, italics, etc)
+    # markdown_body = handle_styling(markdown_body)
+    markdown_body = convert_formatting(markdown_body)
 
-markdown_body = handle_preformatted_blocks(markdown_body)
+    # Handle lists
+    markdown_body = handle_lists(markdown_body)
 
-# Replace template with content
+    # Handle headers
+    markdown_body = handle_headers(markdown_body)
 
-## Replace Post Template with content
-squished_post = merge_with_post(markdown_body, frontmatter)
+    markdown_body = handle_preformatted_blocks(markdown_body)
 
-## Replace Base template with post
+    # Replace template with content
 
-base_fp = f"{base_path}{templates["base"]}"
-base_html_template = [ ]
+    ## Replace Post Template with content
+    squished_post = merge_with_post(markdown_body, frontmatter)
 
-with open(base_fp, "r") as file:
-    base_html_template = file.readlines()
+    ## Replace Base template with post
 
-for i, line in enumerate(base_html_template):
-    if "{{title}}" in line:
-        base_html_template[i] = line.replace("{{title}}", title)
-    if "{{body}}" in line:
-        base_html_template[i] = line.replace("{{body}}", squished_post)
+    base_fp = f"{base_path}{templates["base"]}"
+    base_html_template = [ ]
 
-new_html = f"{base_path}\\content\\{title}.html"
+    with open(base_fp, "r") as file:
+        base_html_template = file.readlines()
 
-with open(new_html, "w+") as file:
-    file.writelines(base_html_template)
+    for i, line in enumerate(base_html_template):
+        if "{{title}}" in line:
+            base_html_template[i] = line.replace("{{title}}", title)
+        if "{{body}}" in line:
+            base_html_template[i] = line.replace("{{body}}", squished_post)
+
+    new_html = f"{base_path}\\content\\{title}.html"
+
+    with open(new_html, "w+") as file:
+        file.writelines(base_html_template)
+
+def main():
+    path_to_raw = f"{base_path}\\raw"
+    files_in_raw = os.listdir(path_to_raw)
+    for file in files_in_raw:
+        if file.endswith(".md"):
+            print("converting "+ file)
+            core_loop(f"{path_to_raw}\\{file}")
+        
+if __name__ == "__main__":
+    main()

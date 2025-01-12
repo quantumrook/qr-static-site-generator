@@ -18,7 +18,7 @@ modified:
 | links, internal | Yes |
 | links, external | Yes |
 | links, embedded | No |
-| Tables | In progress |
+| Tables | Yes |
 | Callouts | Yes |
 | Code Blocks | Yes |
 | Math | No |
