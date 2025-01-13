@@ -18,7 +18,7 @@ replacement_syntax = {
             "bold" : r'<b>\g<content></b>', # **<content>**
             "italics" : r'<i>\g<content></i>', # *<content>*
             "horizontal_rule" : "", # ---
-            "strikeout" : r'<strike>\g<content></strike>'
+            "strikeout" : r'<s>\g<content></s>'
         },
 }
 
