@@ -1,19 +1,28 @@
 from private import base_path, templates
 
-def merge_with_post(markdown_body, frontmatter) -> str:
+def old_merge_with_post(markdown_body, frontmatter) -> str:
 
     squished_body = __squish_body(markdown_body)
     post_html_template = __get_template()
     
     squished_post = __squish_post(frontmatter, post_html_template, squished_body)
     return squished_post
+
+def merge_with_post(formatted_body, frontmatter) -> str:
+
+    #squished_body = __squish_body(markdown_body)
+    post_html_template = __get_template()
+    
+    squished_post = __squish_post(frontmatter, post_html_template, formatted_body)
+    return squished_post
         
+
 def __squish_body(markdown_body: list[str])-> str:
     squished_body = ""
     have_reached_text = False
 
     for line in markdown_body:
-        if line is "\n" and have_reached_text == False:
+        if line == "\n" and have_reached_text == False:
             continue
         else:
             have_reached_text = True

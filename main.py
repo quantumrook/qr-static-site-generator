@@ -3,7 +3,7 @@ from private import base_path, templates
 import os
 
 from chunk_markdown import chunk_markdown_file, print_nested
-
+from handlers.embedded import find_embedded_link
 from handlers.frontmatter import handle_frontmatter
 from handlers.callout import handle_callouts
 from handlers.merge_with_post import merge_with_post
@@ -148,13 +148,39 @@ def main():
             # Get frontmatter
         title, date_created, dates_modified, markdown_body = handle_frontmatter(content)
         frontmatter = (title, date_created, dates_modified[-1])
-        chunked_content = chunk_markdown_file(markdown_body)
+        chunked_content = chunk_markdown_file(markdown_body, True)
         files[fname] = {
             "frontmatter" : frontmatter,
             "content"     : chunked_content
         }
     # Handle embedded stuff
     
+    for fname in list(files.keys()):
+        chunked_body = files[fname]["content"]
+        embedded_links = find_embedded_link(chunked_body)
+        if not embedded_links:
+            print(f"{fname} has no embedded links.")
+            continue
+            
+        h2_name = list(embedded_links.keys())[0]
+        h3_name = list(embedded_links[h2_name].keys())[0]
+        list_index, sub_list_index, file_name, section_name = embedded_links[h2_name][h3_name][0]
+        print(h2_name, h3_name)
+        print(list_index, sub_list_index, file_name, section_name)
+        print("\n")
+        
+        for linked_file in list(files.keys()):
+            if linked_file.strip(".md") == file_name:
+                print(files[linked_file]["content"].keys())
+                linked_body_content = files[linked_file]["content"]
+                
+                for h2_key in list(linked_body_content.keys()):
+                    if section_name in h2_key:
+                        chunked_body[h2_name][h3_name][list_index][sub_list_index] = linked_body_content[h2_key]
+                
+                print(chunked_body)
+    
+    return
     # Finish conversion and make output file
     for fname in list(files.keys()):
         frontmatter = files[fname]["frontmatter"]
