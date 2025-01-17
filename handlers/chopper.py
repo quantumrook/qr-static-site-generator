@@ -3,9 +3,9 @@ from markdown_node import MarkdownNode
 def chop(lines: list[str]):
     
     frontmatter, body = separate_frontmatter_from_body(lines)
+    article_node = chop_body_into_nodes(body)
     
-    
-    
+    return frontmatter, article_node
 
 def separate_frontmatter_from_body(lines: list[str]):
     horizontal_rule_indices = [i for i,x in enumerate(lines) if x == "---\n"]
@@ -17,25 +17,42 @@ def separate_frontmatter_from_body(lines: list[str]):
     body = lines[end_of_frontmatter+1:]
     return frontmatter, body
 
-def chop_body_into_nodes(body: list[str]) -> MarkdownNode:
-    block_signals = ['# ', '## ', '### ', '#### ', '##### ', '###### ', '---']
-    article_node = MarkdownNode("article", None, None)
+def __get_section_indices(body: list[str]) -> list[int]:
+    section_signals = ['# ', '## ', '### ', '#### ', '##### ', '###### ', '---']
+    indices = [i for i, x in enumerate(body) for y in section_signals if x.startswith(y)]
+    block_signals = ['```']
+    indices_to_ignore = [i for i, x in enumerate(body) for y in block_signals if x.startswith(y)]
+    cleaned_indices = [ ]
+    for index in indices:
+        found_issue = False
+        for i in range(0, len(indices_to_ignore), 2):
+            start = indices_to_ignore[i]
+            stop = indices_to_ignore[i+1]
+            
+            if index > start and index < stop:
+                found_issue = True
+        if not found_issue:
+            cleaned_indices.append(index)
+    return cleaned_indices
     
-    block_of_content = [ ]
-    
-    indices = [i for i, x in enumerate(body) for y in block_signals if x.startswith(y)]
-    header_levels_present = [y for x in body for y in block_signals if x.startswith(y)]
-    header_levels_present = list(dict.fromkeys(header_levels_present))
-    
-    content_indices = [ ]
+def __get_section_content(indices: list[int], body: list[str]) -> list[list[str]]:
+    blocks_of_content = [ ]
     for i, index in enumerate(indices):
         if i+1 == len(indices):
-            content_indices.append((index+1, len(body)))
+            blocks_of_content.append(body[index+1:len(body)])
         else:
-            content_indices.append((index+1, indices[i+1]-1))
+            blocks_of_content.append(body[index+1:indices[i+1]-1])
+    return blocks_of_content
+
+def __get_section_name_to_level_map(body: list[str], section_indices: list[int]) -> dict[str, int]:
+    block_signals = ['# ', '## ', '### ', '#### ', '##### ', '###### ', '---']
     
-    for start, stop in content_indices:
-        block_of_content.append(body[start:stop])
+    section_headers = [ ]
+    for index in section_indices:
+        section_headers.append(body[index])
+    
+    header_levels_present = [y for x in section_headers for y in block_signals if x.startswith(y)]
+    header_levels_present = list(dict.fromkeys(header_levels_present))
     
     name_map = {
         "---" : -1,
@@ -46,26 +63,50 @@ def chop_body_into_nodes(body: list[str]) -> MarkdownNode:
         if header_level.strip() not in name_map:
             name_map[header_level.strip()] = level_counter
             level_counter += 1
+    return name_map
 
 
+def chop_body_into_nodes(body: list[str]) -> MarkdownNode:
+    section_header_indices = __get_section_indices(body)
+    section_content = __get_section_content(section_header_indices, body)
+    
+    section_name_map = __get_section_name_to_level_map(body, section_header_indices)
+    
+    article_node = MarkdownNode("article", body[:section_header_indices[0]], None)
     last_node = article_node
-    last_node.parent = article_node
     
     last_node_at_level = { 0 : article_node }
-    for i, index in enumerate(indices):
+    for i, index in enumerate(section_header_indices):
         node_name = body[index].strip()
-        node_level = name_map[node_name.split(" ")[0]]
-        last_node_level = name_map[last_node.block_name.split(" ")[0]]
+        node_level = section_name_map[node_name.split(" ")[0]]
+        last_node_level = section_name_map[last_node.block_name.split(" ")[0]]
         
-        if node_level > last_node_level:
-            node = MarkdownNode(node_name, block_of_content[i], last_node)
+        if last_node_level == -1:
+            last_node = last_node_at_level[node_level -1]
+            node = MarkdownNode(node_name, section_content[i], last_node)
+        elif node_level > last_node_level:
+            node = MarkdownNode(node_name, section_content[i], last_node)
         elif node_level == last_node_level or node_level == -1:
-            node = MarkdownNode(node_name, block_of_content[i], last_node.parent)
+            node = MarkdownNode(node_name, section_content[i], last_node.parent)
         else:
             last_node = last_node_at_level[node_level -1]
-            node = MarkdownNode(node_name, block_of_content[i], last_node)
+            node = MarkdownNode(node_name, section_content[i], last_node)
         
         last_node = node
         last_node_at_level[node_level] = last_node
 
+    return article_node
+
+
+def chop_nodes_into_subnodes(article_node: MarkdownNode) -> MarkdownNode:
+    
+    for child in article_node.children:
+        print(child.block_data)
+        print("\n")
+        for h3 in child.children:
+            print(h3.block_data)
+            print("\n")
+        print("\n")
+    
+    
     return article_node

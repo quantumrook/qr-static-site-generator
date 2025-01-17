@@ -14,14 +14,15 @@ class TestMarkdownNode(unittest.TestCase):
         parent_node = MarkdownNode(block_name="Parent", block_data="", parent=None)
         child_node = MarkdownNode(block_name="Child", block_data="Child of Parent", parent=parent_node)
         
-        self.assertEqual(parent_node.get_branch_name()[0], 'Parent -> Child')
+        self.assertEqual(parent_node.get_branch_name()[0], 'Parent')
+        self.assertEqual(parent_node.get_branch_name()[1], 'Parent -> Child')
     
     def test_branch_name_multiple_children(self):
         parent_node = MarkdownNode(block_name="Parent", block_data="", parent=None)
         child1_node = MarkdownNode(block_name="Child1", block_data="Child of Parent", parent=parent_node)
         child2_node = MarkdownNode(block_name="Child2", block_data="Child of Parent", parent=parent_node)
         
-        branch_names = ['Parent -> Child1', 'Parent -> Child2' ]
+        branch_names = ['Parent', 'Parent -> Child1', 'Parent -> Child2' ]
         
         matches = [ ]
         for actual_branch_name in parent_node.get_branch_name():
@@ -44,7 +45,7 @@ class TestMarkdownNode(unittest.TestCase):
         
         grandchild_node = MarkdownNode(block_name="Grandchild", block_data="Child of Child2", parent=child2_node)
 
-        branch_names = ['Parent -> Child1', 'Parent -> Child2 -> Grandchild' ]
+        branch_names = ['Parent -> Child1', 'Parent -> Child2', 'Parent -> Child2 -> Grandchild' ]
         
         matches = [ ]
         for actual_branch_name in parent_node.get_branch_name():
@@ -91,8 +92,18 @@ class TestMarkdownNode(unittest.TestCase):
         level_1 = MarkdownNode("level 1", "", root_node)
         self.assertEqual(level_1.get_level(), 1)
         
-        level_2 = MarkdownNode("level 1", "", level_1)
+        level_2 = MarkdownNode("level 2", "", level_1)
         self.assertEqual(level_2.get_level(), 2)
+
+    def test_get_node_at_level(self):
         
-if __name__ == '__main__':
-    unittest.main()
+        root_node = MarkdownNode("root", "", None)
+        level_1 = MarkdownNode("level 1", "", root_node)
+        level_2 = MarkdownNode("level 2", "", level_1)
+        
+        current_node = level_2
+        while current_node.get_level() != 0:
+            current_node = current_node.parent
+        
+        self.assertEqual(current_node.get_level(), root_node.get_level())
+        self.assertIs(current_node, root_node)
