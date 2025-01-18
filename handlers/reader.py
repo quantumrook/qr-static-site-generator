@@ -1,6 +1,8 @@
 import os
 from typing import Any
 
+from private import base_path
+
 def get_files(source_directory: str, destination_directory: str, fresh_build: bool = False) -> dict[str, list[str]]:
 
     source_files = read_source(source_directory)
@@ -25,15 +27,17 @@ def get_files(source_directory: str, destination_directory: str, fresh_build: bo
 def read_source(source_directory: str) -> dict[str, Any]:
     files_to_convert = { }
     files_in_source = os.listdir(source_directory)
-    
+
     for src_file in files_in_source:
         if src_file.endswith(".md"):
-            files_to_convert[src_file] = { "modified" : os.path.getmtime(source_directory + src_file) }
+            files_to_convert[src_file] = {
+                "modified" : os.path.getmtime(source_directory + src_file)
+            }
             with open(source_directory + src_file, "r") as reader:
                 files_to_convert[src_file]["content"] = reader.readlines()
-    
+
     # TODO:: Handle nested directories
-    
+
     return files_to_convert
 
 def read_destination(destination_directory: str) -> dict[str, float]:
@@ -41,7 +45,21 @@ def read_destination(destination_directory: str) -> dict[str, float]:
     files_in_destination = os.listdir(destination_directory)
     for dest_file in files_in_destination:
         if dest_file.endswith(".html"): #skip anything thats not html
-            already_built_files[dest_file] = { "modified" : os.path.getmtime(destination_directory + dest_file)}
+            already_built_files[dest_file] = {
+                "modified" : os.path.getmtime(destination_directory + dest_file)
+            }
 
     return already_built_files
-    
+
+def get_templates() -> dict[str, list[str]]:
+
+    templates = { }
+    template_names = os.listdir(f"{base_path}\\templates\\")
+
+    for template in template_names:
+        if not template.endswith(".html"):
+            continue
+        with open(f"{base_path}\\templates\\{template}", "r") as reader:
+            templates[template] = reader.readlines()
+
+    return templates

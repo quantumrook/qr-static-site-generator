@@ -49,6 +49,7 @@ class TestMarkdownNode(unittest.TestCase):
         
         matches = [ ]
         for actual_branch_name in parent_node.get_branch_name():
+            print(actual_branch_name)
             for theory_branch_name in branch_names:
                 if actual_branch_name == theory_branch_name:
                     matches.append(True)
@@ -107,3 +108,14 @@ class TestMarkdownNode(unittest.TestCase):
         
         self.assertEqual(current_node.get_level(), root_node.get_level())
         self.assertIs(current_node, root_node)
+
+    def test_squish(self):
+
+        root_node = MarkdownNode("root", ["Hello", "world"], None)
+        level_1 = MarkdownNode("level 1", ["Lorem Ipsum", "is overkill"], root_node)
+        level_2 = MarkdownNode("level 2", ["no really", "it is"], level_1)
+        level_1b = MarkdownNode("level 1b", ["surprise!"], root_node)
+        squished_tree = root_node.squish()
+
+        expected_squish = "root\nHello\nworld\nlevel 1\nLorem Ipsum\nis overkill\nlevel 2\nno really\nit is\nlevel 1b\nsurprise!\n"
+        self.assertEqual(squished_tree, expected_squish)

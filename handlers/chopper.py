@@ -1,10 +1,11 @@
 from markdown_node import MarkdownNode
 
 def chop(lines: list[str]):
-    
+
     frontmatter, body = separate_frontmatter_from_body(lines)
+    frontmatter = __handle_frontmatter(frontmatter)
     article_node = chop_body_into_nodes(body)
-    
+
     return frontmatter, article_node
 
 def separate_frontmatter_from_body(lines: list[str]):
@@ -16,6 +17,24 @@ def separate_frontmatter_from_body(lines: list[str]):
     frontmatter = lines[start_of_frontmatter:end_of_frontmatter]
     body = lines[end_of_frontmatter+1:]
     return frontmatter, body
+
+def __handle_frontmatter(lines: list[str]) -> tuple[str, str, list[str]]:
+    title = ""
+    date_created = ""
+    dates_modified = [ ]
+    for i, line in enumerate(lines):
+        attribute, _, content = line.partition(":")
+        content = content.strip() #get rid of whitespace and newline characters
+        match attribute:
+            case "title":
+                title = content.strip('"')
+            case "created":
+                date_created = content.strip('"')
+            case "modified":
+                for j in range(i+1, len(lines)):
+                    _, date = lines[j].split("- ")
+                    dates_modified.append(date.strip('"'))
+    return (title, date_created, dates_modified)
 
 def __get_section_indices(body: list[str]) -> list[int]:
     section_signals = ['# ', '## ', '### ', '#### ', '##### ', '###### ', '---']
@@ -65,7 +84,6 @@ def __get_section_name_to_level_map(body: list[str], section_indices: list[int])
             level_counter += 1
     return name_map
 
-
 def chop_body_into_nodes(body: list[str]) -> MarkdownNode:
     section_header_indices = __get_section_indices(body)
     section_content = __get_section_content(section_header_indices, body)
@@ -95,18 +113,4 @@ def chop_body_into_nodes(body: list[str]) -> MarkdownNode:
         last_node = node
         last_node_at_level[node_level] = last_node
 
-    return article_node
-
-
-def chop_nodes_into_subnodes(article_node: MarkdownNode) -> MarkdownNode:
-    
-    for child in article_node.children:
-        print(child.block_data)
-        print("\n")
-        for h3 in child.children:
-            print(h3.block_data)
-            print("\n")
-        print("\n")
-    
-    
     return article_node
