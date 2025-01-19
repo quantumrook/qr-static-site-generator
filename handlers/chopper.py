@@ -90,6 +90,9 @@ def chop_body_into_nodes(body: list[str]) -> MarkdownNode:
     
     section_name_map = __get_section_name_to_level_map(body, section_header_indices)
     
+    if not section_header_indices:
+        return MarkdownNode("article", body, None)
+    
     article_node = MarkdownNode("article", body[:section_header_indices[0]], None)
     last_node = article_node
     

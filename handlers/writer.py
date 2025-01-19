@@ -1,3 +1,4 @@
+import os
 from handlers.reader import get_templates
 
 def write_files(files, destination_directory: str)-> None:
@@ -6,6 +7,12 @@ def write_files(files, destination_directory: str)-> None:
     for filename in filenames:
         prepared_template = prepare_template(files[filename])
         dest_filename = filename[:-3] + ".html"
+        
+        if "\\" in filename:
+            sub_dir_name = filename.split("\\")[0]
+            if not os.path.isdir(os.path.join(destination_directory, sub_dir_name)):
+                os.mkdir(os.path.join(destination_directory, sub_dir_name))
+        
         with open(destination_directory + dest_filename, "w+") as writer:
             writer.writelines(prepared_template)
 

@@ -26,18 +26,17 @@ def get_files(source_directory: str, destination_directory: str, fresh_build: bo
 
 def read_source(source_directory: str) -> dict[str, Any]:
     files_to_convert = { }
-    files_in_source = os.listdir(source_directory)
-
-    for src_file in files_in_source:
-        if src_file.endswith(".md"):
-            files_to_convert[src_file] = {
-                "modified" : os.path.getmtime(source_directory + src_file)
-            }
-            with open(source_directory + src_file, "r") as reader:
-                files_to_convert[src_file]["content"] = reader.readlines()
-
-    # TODO:: Handle nested directories
-
+    for path, subdirs, files in os.walk(source_directory):
+        for name in files:
+            if name.endswith(".md"):
+                file_path = os.path.join(path, name)
+                mtime = os.path.getmtime(file_path)
+                file_name = file_path.split(source_directory)[-1]
+                files_to_convert[file_name] = {
+                    "modified" : mtime
+                }
+                with open(file_path, "r") as reader:
+                    files_to_convert[file_name]["content"] = reader.readlines()
     return files_to_convert
 
 def read_destination(destination_directory: str) -> dict[str, float]:

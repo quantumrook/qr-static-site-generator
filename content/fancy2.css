@@ -8,25 +8,24 @@ h2, h3, h4, h5, h6 {
     border-radius: 15px 15px 0px 0px;
 }
 
+body{
+    background: linear-gradient(
+        to right,
+        rgba(220,220,220,0.75) 20px,
+        rgba(200,200,200,0.75) 50%,
+        rgba(70,130,176,0.45)
+    );
+}
+
 section {
     border-left: 40px solid (255 255 255 / 100%);
     border-radius: 0px 0px 20px 20px;
 }
 
-section.h2 {
-    background: linear-gradient(
-        to right,
-        rgba(220,220,220,0.75) 20px,
-        rgba(200,200,200,0.75) 50%,
-        rgba(70,130,176,0.45)
-    );
+section.h2::before {
+    filter: blur(20px);
 }
 
-h2 {
-    background: linear-gradient(
-        to right,
-        rgba(220,220,220,0.75) 20px,
-        rgba(200,200,200,0.75) 50%,
-        rgba(70,130,176,0.45)
-    );
+h2::before {
+    filter: blur(40px);
 }
