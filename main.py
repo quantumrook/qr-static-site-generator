@@ -47,5 +47,5 @@ if __name__ == "__main__":
 
     main(
         raw["directory"],
-        f'{base_path}\\tests\\'
+        f'{base_path}\\content\\'
     )
