@@ -81,7 +81,7 @@ And now let's track our progress:
 Here, we create a simple loop in python:
 
 ```python
-#before: start, stop, step
+# before: start, stop, step
 for i in range(start, stop, step):
     f.integrate(i)
 ```
