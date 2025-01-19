@@ -6,6 +6,7 @@ from handlers.reader import get_files
 from handlers.chopper import chop
 from handlers.formatter import handle_formatting
 from handlers.writer import write_files
+from handlers.embedder import get_embedding_info, embed
 
 def convert_files_to_nodes(files: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """_summary_
@@ -38,7 +39,8 @@ def main(source_directory: str, destination_directory: str):
     filenames = list(files.keys())
     for filename in filenames:
         files[filename]["content"] = handle_formatting(files[filename]["content"])
-
+        files[filename]["embeds"] = get_embedding_info(files[filename]["content"])
+    files = embed(files)
     write_files(files, destination_directory)
 
 if __name__ == "__main__":
